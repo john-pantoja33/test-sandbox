@@ -16,8 +16,8 @@ environments:
 
     development:
         adapter: mysql
-        host: mend-mysql
-        name: png
+        host: 172.18.0.2
+        name: tasker
         user: root
         pass: 'tiger'
         port: 3306

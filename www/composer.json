@@ -1,5 +1,24 @@
 {
+    "name": "johnpantoja/mend",
+    "description": "Mend Coding test",
+    "type": "project",
     "require": {
+        "vlucas/phpdotenv": "^4.1",
         "robmorgan/phinx": "^0.11.4"
+    },
+    "require-dev": {
+        "vlucas/phpdotenv": "^4.1",
+        "robmorgan/phinx": "^0.11.4"
+    },
+    "authors": [
+        {
+            "name": "John Pantoja",
+            "email": "john.pantoja33@gmail.com"
+        }
+    ],
+    "autoload": {
+      "psr-4": {
+        "Tasker\\": "src/"
+      }
     }
 }

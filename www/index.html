@@ -1,0 +1,113 @@
+<html>
+  <head>
+    <title>Tasker 1.0</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Tasker 1.0 Application">
+    <meta name="author" content="John Pantoja">
+    <link href="assets/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
+    <link href="assets/fontawesome/5.12.1/css/all.min.css" rel="stylesheet">
+  </head>
+  <body>
+    <nav class="navbar navbar-dark bg-dark static-top">
+      <div class="container-fluid">
+        <button class="btn btn-primary add-task" type="button" data-toggle="modal" data-target="#form-modal">
+          <i class="fas fa-plus"></i>
+        </button>
+        <a class="navbar-brand" href="#">Tasker 1.0</a>
+      </div>
+    </nav>
+    <div class="modal" id="form-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <div id="form-contents"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="container-fluid" id="app-container">
+      <div class="row" id="app-row">
+        <div class="col-12" id="app-column">
+          <div id="app-contents">
+            <div class="card-deck"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="assets/jquery/3.4.1/jquery.min.js"></script>
+    <script src="assets/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="assets/handlebars/4.7.3/handlebars.min.js"></script>
+    <script src="assets/axios/0.19.2/axios.min.js"></script>
+    <script src="assets/js/app.js"></script>
+    <script type="text/x-handlebars-template" id="template-task-card">
+      <div class="col-3">
+        <div class="card" id="task-{{id}}" task="{{id}}">
+          <div class="card-header">
+            <div class="text-right">
+              <button class="btn btn-sm bg-transparent edit-task" type="button" role="button" task="{{id}}"><i class="fas fa-pencil-alt" task="{{id}}"></i></button>
+              <button class="btn btn-sm bg-transparent remove-task" type="button" role="button" task="{{id}}"><i class="fas fa-trash" task="{{id}}"></i></button>
+            </div>
+          </div>
+          <div class="card-body">
+            <h3 class="card-title task-title">{{title}}</h3>
+            <p class="card-text task-content text-break">{{content}}</p>
+            <p class="card-text">
+              <small class="text-muted">Completed: <span class="task-completed">{{#if completed}}Yes{{else}}No{{/if}}</span></small>
+              <small class="text-muted">Due On: <span class="task-due-on">{{due_on}}</span></small>
+            </p>
+          </div>
+          <div class="card-footer">
+            <small class="text-muted">Created: <span class="task-created">{{created}}</span></small>
+            <small class="text-muted">Last updated: <span class="task-modified">{{modified}}</span></small>
+          </div>
+        </div>
+      </div>
+    </script>
+    <script type="text/x-handlebars-template" id="template-task-form">
+      <h5 class="text-black h4" id="form-header">{{header}}</h5>
+      <form class="form" id="task-form" method="{{method}}" {{#if task}}task="{{task.id}}"{{/if}}>
+        <input type="hidden" name="created" value="{{task.created}}" />
+        <input type="hidden" name="modified" value="{{task.modified}}" />
+        {{#if task}}
+          <input type="hidden" name="id" value="{{task.id}}" />
+        {{/if}}
+        {{#unless remove}}
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="title">Title</label>
+            <input class="form-control" name="title" type="text" value="{{task.title}}" placeholder="Enter a title" required />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="content">Content</label>
+            <textarea class="form-control" name="content" rows="3">{{task.content}}</textarea>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-12">
+            <label for="title">Due On</label>
+            <input class="form-control" name="due_on" type="date" value="{{task.due_on}}" placeholder="Enter a due date">
+          </div>
+        </div>
+        {{#if task}}
+        <div class="form-row">
+          <div class="form-group form-check">
+            <input class="form-check-input" name="completed" type="checkbox" {{#if task.completed}}checked value="1"{{else}}value="0"{{/if}} />
+            <label class="form-check-label" for="completed">Completed</label>
+          </div>
+        </div>
+        {{else}}
+          <input type="hidden" name="completed" value="0" />
+        {{/if}}
+        {{else}}
+        <p>Are you sure you wish to remove this task ({{task.title}})? This action cannot be undone.
+        {{/unless}}
+        <div class="form-row">
+          <button class="btn btn-primary" type="submit">{{buttons.submit}}</button>
+          <button class="btn btn-seconday" type="reset">{{buttons.cancel}}</button>
+      </form>
+    </script>
+  </body>
+</html>
